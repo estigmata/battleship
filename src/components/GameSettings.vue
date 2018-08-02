@@ -2,26 +2,28 @@
   <div class="container">
     <div class="settings">
       <h1>Game Settings</h1>
-      <label>Size Board:</label>
+      <label>Rows Size Board:</label>
       <div class="form-input">
-        <input v-model="size">
+        <input v-model="rowSize" />
+      </div>
+      <label>Columns Size Board:</label>
+      <div class="form-input">
+        <input v-model="colSize" />
       </div>
     </div>
-    <YourFleet :boardSize="size" />
-    <OpponentFleet :boardSize="size" />
+    <BoardGame :board="{title: 'Your Fleet', rows: rowSize, cols: colSize}" />
+    <BoardGame :board="{title: 'Opponent Fleet', rows: rowSize, cols: colSize}" />
   </div>
 </template>
 
 <script>
-import YourFleet from '@/components/YourFleet.vue'
-import OpponentFleet from '@/components/OpponentFleet.vue'
+import BoardGame from '@/components/BoardGame.vue'
 
 export default {
   name: 'gamesettings',
-  data: () => ({ size: '10' }),
+  data: () => ({ rowSize: '10', colSize: '10' }),
   components: {
-    YourFleet,
-    OpponentFleet
+    BoardGame
   }
 }
 </script>

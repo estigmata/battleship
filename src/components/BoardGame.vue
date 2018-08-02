@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <h3>Opponent Fleet</h3>
+    <h3>{{board.title}}</h3>
     <div class="game-board">
       <table>
         <tr v-for="(row, index) in rows" :key="index">
@@ -15,15 +15,15 @@
 
 <script>
   export default {
-    name: 'opponentfleet',
-    props: ['boardSize'],
+    name: 'boardgame',
+    props: ['board'],
     computed: {
       rows: function() {
-        let size = (parseInt(this.boardSize.rows) <= 50) ? parseInt(this.boardSize.rows) : 10
+        let size = (parseInt(this.board.rows) <= 50) ? parseInt(this.board.rows) : 10
         return new Array(size  || 10)
       },
       cols: function() {
-        let size = (parseInt(this.boardSize.cols) <= 50) ? parseInt(this.boardSize.cols) : 10
+        let size = (parseInt(this.board.cols) <= 50) ? parseInt(this.board.cols) : 10
         return new Array(size  || 10)
       }
     }
