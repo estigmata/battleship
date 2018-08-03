@@ -19,11 +19,11 @@
     props: ['board'],
     computed: {
       rows: function() {
-        let size = (parseInt(this.board.rows) <= 50) ? parseInt(this.board.rows) : 10
+        const size = (parseInt(this.board.rows) <= 50) ? parseInt(this.board.rows) : 10
         return new Array(size  || 10)
       },
       cols: function() {
-        let size = (parseInt(this.board.cols) <= 50) ? parseInt(this.board.cols) : 10
+        const size = (parseInt(this.board.cols) <= 50) ? parseInt(this.board.cols) : 10
         return new Array(size  || 10)
       }
     }
