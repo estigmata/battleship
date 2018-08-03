@@ -2,13 +2,18 @@
   <div class="dashboard">
     <h3>{{board.title}}</h3>
     <div class="game-board">
-      <table>
+      <!--table>
         <tr v-for="(row, index) in rows" :key="index">
           <td v-for="(col, index) in cols" :key="index">
             .
           </td>
         </tr>
-      </table>
+      </table-->
+      <div class="row" v-for="(row, index) in rows" :key="index">
+        <div class="column" v-for="(col, index) in cols" :key="index">
+
+        </div>
+      </div>
     </div>
   </div>
 </template>

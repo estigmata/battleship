@@ -54,6 +54,7 @@ a {
   flex-grow: 0;
   padding: 10px;
   overflow: auto;
+  max-width: 100%;
 }
 
 table {
@@ -70,4 +71,26 @@ td {
 
 td:hover {
   background-color: #34626B;
+}
+
+.game-board {
+  display: table;
+  float: left;
+	border-left: 1px dotted #fff;
+  border-top: 1px dotted #fff;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+[class*='column'] {
+  border-right: 1px dotted #fff;
+  border-bottom: 1px dotted #fff;
+  float: left;
+  position: relative;
+  height: 20px;
+  width: 20px;
 }
