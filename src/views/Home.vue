@@ -1,22 +1,16 @@
 <template>
-  <div class="home container">
+  <div class="home">
     <GameSettings />
-    <YourFleet />
-    <OpponentFleet />
   </div>
 </template>
 
 <script>
 import GameSettings from '@/components/GameSettings.vue'
-import YourFleet from '@/components/YourFleet.vue'
-import OpponentFleet from '@/components/OpponentFleet.vue'
 
 export default {
   name: 'home',
   components: {
-    GameSettings,
-    YourFleet,
-    OpponentFleet
+    GameSettings
   }
 }
 </script>
