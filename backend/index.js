@@ -3,27 +3,23 @@ const bodyParser = require('body-parser')
 const app = express()
 const env = require('./dev/env')
 const db = require('./src/config/db')
+const Game = require('./src/controllers/game')
 
 const port = env.PORT
 
 app.use(bodyParser.json())
 
 app.post('/api/v1/games', (req, res) => {
-  const playerId = req.body.playerId
-  const token = req.body.token
-  db.game.create({
-    playerId: playerId,
-    token: token
-  })
-    .then(newGame => res.json(newGame))
+  Game.create(req.body)
+    .then(game => res.send(game))
     .catch(error => {
-      console.log('Error: Creating new game.', error)
+      console.log('Error: The game could not been created.', error)
       throw error
     })
-})
+  })
 
 db.sequelize.sync()
-  .then(() => {
+.then(() => {
     console.log('Database connection has been established successfully.')
     app.listen(port, () => {
       console.log(`Web server listening on: ${port}`)
