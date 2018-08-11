@@ -4,19 +4,24 @@ const db = require('../config/db')
 
 class Game {
   constructor({cols = 10, rows = 10} = {}) {
-    this.boardColumns = cols
-    this.boardRows = rows
+    this.columns = cols
+    this.rows = rows
   }
   static create(gameData) {
     const game = new Game({cols: gameData.columns, rows: gameData.rows})
-    game.playerId = generateId()
+    game.playerOwner = generateId()
+    game.playerOponent = ''
     game.token = generateId()
     game.session = `http://${env.HOST}:${env.PORT}/api/v1/game?token=${game.token}`
     return db.game.create(game)
-      .then(newGame => newGame)
+      .then(newGame => Promise.resolve({
+        id: newGame.id,
+        playerId: newGame.playerOwner,
+        session: newGame.session
+      }))
       .catch(error => {
         console.log('Error. New game could not been created.', error)
-        throw error
+        Promise.reject(error)
       })
   }
 }

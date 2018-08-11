@@ -1,12 +1,15 @@
 module.exports = (sequelize, DataTypes) => sequelize.define('game', {
-  boardColumns: {
+  columns: {
     type: DataTypes.INTEGER
   },
-  boardRows: {
-    type: DataTypes.INTEGER
-  },
-  playerId: {
+  playerOwner: {
     type: DataTypes.STRING
+  },
+  playerOponent: {
+    type: DataTypes.STRING
+  },
+  rows: {
+    type: DataTypes.INTEGER
   },
   session: {
     type: DataTypes.STRING

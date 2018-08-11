@@ -14,7 +14,8 @@ app.post('/api/v1/games', (req, res) => {
     .then(game => res.send(game))
     .catch(error => {
       console.log('Error: The game could not been created.', error)
-      throw error
+      res.status(500)
+      res.send(error)
     })
   })
 
