@@ -8,7 +8,6 @@ const sequelize = new Sequelize(
     host: env.DATABASE.HOST,
     dialect: env.DATABASE.DIALECT,
     port: env.DATABASE.PORT,
-    //logging: false,
     dialectOptions: {
       requestTimeout: 30000,
       encrypt: true
