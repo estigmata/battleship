@@ -25,10 +25,10 @@ class Game {
       })
   }
   static join(token) {
-    return db.game.findOne({where: {token: token}})
+    return db.game.update({playerOponent: generateId()}, {where: {token: token}})
       .then(game => Promise.resolve({
         id: game.id,
-        playerId: generateId()
+        playerOponent: game.playerOponent
       }))
       .catch(error => {
         console.log('Error. The game could not found.', error)
