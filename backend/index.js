@@ -9,6 +9,16 @@ const port = env.PORT
 
 app.use(bodyParser.json())
 
+app.get('/api/v1/games', (req, res) => {
+  Game.join(req.query.token)
+    .then(game => res.send(game))
+    .catch(error => {
+      console.log('Error: The game could not found.', error)
+      res.status(404)
+      res.send(error)
+    })
+})
+
 app.post('/api/v1/games', (req, res) => {
   Game.create(req.body)
     .then(game => res.send(game))

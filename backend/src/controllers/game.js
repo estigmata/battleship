@@ -12,7 +12,7 @@ class Game {
     game.playerOwner = generateId()
     game.playerOponent = ''
     game.token = generateId()
-    game.session = `http://${env.HOST}:${env.PORT}/api/v1/game?token=${game.token}`
+    game.session = `http://${env.HOST}:${env.PORT}/api/v1/games?token=${game.token}`
     return db.game.create(game)
       .then(newGame => Promise.resolve({
         id: newGame.id,
@@ -21,6 +21,17 @@ class Game {
       }))
       .catch(error => {
         console.log('Error. New game could not been created.', error)
+        Promise.reject(error)
+      })
+  }
+  static join(token) {
+    return db.game.findOne({where: {token: token}})
+      .then(game => Promise.resolve({
+        id: game.id,
+        playerId: generateId()
+      }))
+      .catch(error => {
+        console.log('Error. The game could not found.', error)
         Promise.reject(error)
       })
   }
