@@ -18,6 +18,8 @@ const db = {}
 
 db.sequelize = sequelize
 
+db.board = require('../models/board')(sequelize, Sequelize)
 db.game = require('../models/game')(sequelize, Sequelize)
+db.ship = require('../models/ship')(sequelize, Sequelize)
 
 module.exports = db

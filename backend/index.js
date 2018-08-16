@@ -1,17 +1,18 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const app = express()
 const env = require('./dev/env')
 const db = require('./src/config/db')
 const Game = require('./src/controllers/game')
+const Board = require('./src/controllers/board')
 
+const app = express()
 const port = env.PORT
 
 app.use(bodyParser.json())
 
 app.get('/api/v1/games', (req, res) => {
   Game.join(req.query.token)
-    .then(game => res.send(game))
+    .then(response => res.send(response))
     .catch(error => {
       console.log('Error: The game could not found.', error)
       res.status(404)
@@ -21,13 +22,26 @@ app.get('/api/v1/games', (req, res) => {
 
 app.post('/api/v1/games', (req, res) => {
   Game.create(req.body)
-    .then(game => res.send(game))
+    .then(response => res.send(response))
     .catch(error => {
       console.log('Error: The game could not been created.', error)
       res.status(500)
       res.send(error)
     })
   })
+
+app.post('/api/v1/games/:gameId/player/:playerId/board', (req, res) => {
+  const gameId = req.params.gameId
+  const playerId = req.params.playerId
+  const shipsList = req.body
+  Board.addShips({gameId, playerId, shipsList})
+    .then(response => res.send(response))
+    .catch(error => {
+      console.log('Error: The ships list could not been added.', error)
+      res.status(500)
+      res.send(error)
+    })
+})
 
 db.sequelize.sync()
 .then(() => {

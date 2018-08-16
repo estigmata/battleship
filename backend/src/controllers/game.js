@@ -3,36 +3,43 @@ const generateId = require('../libs/generate.id')
 const db = require('../config/db')
 
 class Game {
-  constructor({cols = 10, rows = 10} = {}) {
-    this.columns = cols
-    this.rows = rows
-  }
   static create(gameData) {
-    const game = new Game({cols: gameData.columns, rows: gameData.rows})
-    game.playerOwner = generateId()
-    game.playerOponent = ''
-    game.token = generateId()
-    game.session = `http://${env.HOST}:${env.PORT}/api/v1/games?token=${game.token}`
+    const response = {}
+    const game = {}
+    game.PlayerOwner = generateId()
+    game.Token = generateId()
+    game.Session = `http://${env.HOST}:${env.PORT}/api/v1/games?token=${game.Token}`
     return db.game.create(game)
-      .then(newGame => Promise.resolve({
-        id: newGame.id,
-        playerId: newGame.playerOwner,
-        session: newGame.session
-      }))
+      .then(newGame => {
+        const board = {}
+        response.gameId = newGame.id
+        response.playerId = newGame.PlayerOwner
+        response.session = newGame.Session
+        board.Columns = gameData.columns || 10
+        board.Rows = gameData.rows || 10
+        board.GameId = newGame.id
+        return db.board.create(board)
+      })
+      .then(newBoard => {
+        response.boardId = newBoard.id
+        return response
+      })
       .catch(error => {
         console.log('Error. New game could not been created.', error)
-        Promise.reject(error)
+        throw error
       })
   }
   static join(token) {
-    return db.game.update({playerOponent: generateId()}, {where: {token: token}})
-      .then(game => Promise.resolve({
-        id: game.id,
-        playerOponent: game.playerOponent
-      }))
+    const response = {}
+    var playerId = generateId()
+    return db.game.update({PlayerOponent: playerId}, {where: {Token: token}})
+      .then(game => {
+        response.playerId = playerId
+        return response
+      })
       .catch(error => {
-        console.log('Error. The game could not found.', error)
-        Promise.reject(error)
+        console.log('Error. Could not join in the game.', error)
+        throw error
       })
   }
 }
