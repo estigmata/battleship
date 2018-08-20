@@ -56,18 +56,28 @@ a {
   overflow: auto;
 }
 
-table {
-  border-collapse: collapse;
-  margin: 0 auto;
+.game-board ul {
+  display: flex;
+  flex-wrap: nowrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-td {
-  border: 1px dotted #fff;
-  font-family: Georgia, serif;
-  font-size: 14px;
-  padding: 7px;
+.game-board li {
+  background-color: gold;
+  flex: 0 0 20px;
+  height: 20px;
+  margin-left: 1px;
+  margin-bottom: 1px;
+  width: 20px;
 }
 
-td:hover {
-  background-color: #34626B;
+.docker {
+  display: flex;
+  flex-direction: column;
+}
+
+.docker > div {
+  margin-bottom: 5px;
 }
